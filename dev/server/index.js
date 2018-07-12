@@ -8,7 +8,7 @@ const createUser = () => {
   }
 }
 // Try changing this to test your input!
-const USER_COUNT = 1000
+const USER_COUNT = 10
 
 const users = Array(USER_COUNT)
   .fill('')
@@ -19,7 +19,7 @@ const FilterUsers = (props) => {
 
   // let usersArray = [];
 
-  // for(let i = 0; i < users[i].length; i++) {
+// for(let i = 0; i < users[i].length; i++) {
   //   console.log(users[i]);
   //   let usersObject = {};
     
@@ -30,21 +30,9 @@ const FilterUsers = (props) => {
   //     usersArray.push(usersObject);
   //   }
 
-    return (
-      <div>
-        
-        <p>{props.users}</p>
-        <p>Hello</p>
-      </div>
-    )
+    // props.users(usersArray)
+  props.users(users)
+  return null
 }
-
-console.log(users[1].firstname);
-console.log(users[1].lastname);
-// console.log(usersArray);
-// console.log(faker);
-// console.log(filterUsers);
-// console.log(faker.name);
-console.log(users);
 
 export default FilterUsers

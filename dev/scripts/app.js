@@ -15,42 +15,43 @@ class App extends React.Component {
     this.databaseInfo = this.databaseInfo.bind(this);
   }
 
-  componentDidMount(users) {
-    <FilterUsers onLoad={this.users}/>;
-    console.log(this.users);
-  }
-
-  databaseInfo() {
-    <FilterUsers onChange={this.users} />;
-    this.updateSearch(this.props.users);
-    console.log(this.props.users);   
+  databaseInfo(dataFromChild) {
+    console.log(dataFromChild);
+    
+    // this.setState({
+    //   data: dataFromChild
+    // });
   }
 
   // get the value of the user keystroke, hold in state
   updateSearch(e) {
     const userInput = e.target.value.substr(0, 30);
-    // this.databaseInfo(userInput);
-    console.log(this.props.users);   
     this.setState({
       search: userInput
     });
   }
 
   render() {
-    return (
-      <div>
+    
+    // let filteredData = this.props.data.filter(
+    //   (user) => {
+    //     return user.firstname.indexOf(this.state.search) !== -1;
+    //   }
+    // );
+    return <div>
         <h1>Search It!</h1>
         <label>Search a name!</label>
-        <FilterUsers childFunction={this.updateSearch} value={this.users} />
-        <FilterUsers updateSearch={this.props.users}/>
-        <input
-          type="text"
-          value={this.state.search}
-          onChange={this.updateSearch}
-        />
+        {/* i did the filtering here instead? */}
+        {/* <ul>
+          {this.props.data.map((`${data.first} ${data.last}`) => {
+            return <FilterUsers users={this.databaseInfo} key={users.id} />;
+          })}
+        </ul> */}
+
+        <FilterUsers users={this.databaseInfo} />
+        <input type="text" value={this.state.search} onChange={this.updateSearch} />
         <ul />
-      </div>
-    );
+      </div>;
   }
 }
 
