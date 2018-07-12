@@ -1,6 +1,5 @@
 import faker from 'faker';
 import React from "react";
-// import App from "App";
 
 const createUser = () => {
   return {
@@ -8,7 +7,6 @@ const createUser = () => {
     lastname: faker.name.lastName()
   }
 }
-
 // Try changing this to test your input!
 const USER_COUNT = 1000
 
@@ -17,21 +15,36 @@ const users = Array(USER_COUNT)
   .map(x => createUser())
 
 // This method is for you to edit, create the filtering however you deem necessary.
-// filter the names as the user is searching and pass to the render
-const filterUsers = () => {
-  let filtering = users.filter(
+const FilterUsers = (props) => {
 
-  );
-  console.log(filtering);
-  
-  return (
-    users
-  )
+  // let usersArray = [];
+
+  // for(let i = 0; i < users[i].length; i++) {
+  //   console.log(users[i]);
+  //   let usersObject = {};
+    
+  //   usersObject = {
+  //     firstname: users[i].firstname,
+  //     lastname: users[i].lastname
+  //   };
+  //     usersArray.push(usersObject);
+  //   }
+
+    return (
+      <div>
+        
+        <p>{props.users}</p>
+        <p>Hello</p>
+      </div>
+    )
 }
 
+console.log(users[1].firstname);
+console.log(users[1].lastname);
+// console.log(usersArray);
 // console.log(faker);
 // console.log(filterUsers);
 // console.log(faker.name);
-// console.log(users);
+console.log(users);
 
-export default filterUsers
+export default FilterUsers
