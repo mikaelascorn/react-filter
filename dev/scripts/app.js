@@ -16,7 +16,7 @@ class App extends React.Component {
     this.dataSearch = this.dataSearch.bind(this);
     this.dataSearch = this.dataSearch.bind(this);
     this.post = this.post.bind(this);
-    // this.highlight = this.highlight.bind(this);
+    this.highlight = this.highlight.bind(this);
   }
 
   componentDidMount() {
@@ -41,26 +41,9 @@ class App extends React.Component {
     });
   }
 
-  // highlight(wordToMatch) {
-  //   console.log(wordToMatch);
-  //   // const words = {
-  //   //   firstP: wordToMatch.firstname,
-  //   //   lastP: wordToMatch.lastname;,
-  //   // }
-  //   const firstP = wordToMatch.firstname;
-  //   const lastP = wordToMatch.lastname;
-  //         // const regex = new RegExp(wordToMatch, "gi");
-
-  //   return wordToMatch.firstname.filter(name => {
-  //   //   // here we need to figure out if the city or state matches what was searched
-  //     const regex = new RegExp(firstP, "gi");
-  //     return wordToMatch.firstname.match(regex));
-  //   });
-  // }
-
   // this will hold the matches update state/clear users keystrokes, combining first and last names
   dataSearch(firstSearch, lastSearch) {
-    // console.log(dataToSearch);
+    // console.log(firstSearch, lastSearch);
     let firstFiltered = firstSearch.map(data => {
       return data;
     });
@@ -69,18 +52,21 @@ class App extends React.Component {
     });
 
     let personsFilter = lastFiltered.concat(firstFiltered);
-  
+
     if (this.state.search === "") {
       this.setState({
         displayData: []
       });
     } else {
-      this.setState({
-        displayData: personsFilter
-      });
+      this.setState(
+        {
+          displayData: personsFilter
+        },
+        () => {
+          this.highlight(personsFilter);
+        }
+      );
     }
-    this.highlight(personsFilter);
-
   }
 
   // get the value of the user keystroke, hold in state
@@ -99,13 +85,47 @@ class App extends React.Component {
         let firstNameSearch = this.state.data.filter(user => {
           return user.firstname.toLowerCase().indexOf(this.state.search) !== -1;
         });
+
         this.dataSearch(lastNameSearch, firstNameSearch);
+        // this.highlight(this.state.search);
       }
     );
   }
 
+  highlight(input, filtered) {
+
+    // console.log(filtered);
+    // console.log(input);
+    // if (filtered || input != undefined) {
+    //   console.log("hi");
+
+    //   return filtered.filter(data => {
+    //     console.log(data);
+
+    //     const regex = new RegExp(input, "gi");
+    //     return data.firstname.match(regex);
+    //   });
+    // }
+  }
+
   render() {
-    // const cityName = place.city.replace(regex, );
+    // console.log(this.state.displayData);
+    // console.log(this.state.search);
+
+    const dataShow = this.state.displayData;
+    const dataSearched = this.state.search;
+    //   return filtered.filter(data => {
+    //     console.log(data);
+
+    //     return data.firstname.match(regex);
+    //   });
+    // }
+    const regex = new RegExp(dataSearched, "gi");
+
+    const replace = dataSearched.replace(
+      regex,
+      `<span>${dataSearched}</span>`
+    );
 
     let matches = this.state.displayData;
     return (
@@ -136,9 +156,13 @@ class App extends React.Component {
           <ul>
             {matches.map((people, i) => (
               <li key={i} onClick={this.post}>
-                <button>
-                  {people.firstname} {people.lastname}
-                </button>
+                {dataShow.filter((data) => {
+                  console.log(data);
+                  
+                  <button>
+                    {people.firstname} {people.lastname}
+                  </button>;
+                })}
               </li>
             ))}
           </ul>
