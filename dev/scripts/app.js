@@ -14,6 +14,8 @@ class App extends React.Component {
     };
     this.updateSearch = this.updateSearch.bind(this);
     this.dataSearch = this.dataSearch.bind(this);
+    this.dataSearch = this.dataSearch.bind(this);
+
   }
 
   componentDidMount() {
@@ -23,10 +25,9 @@ class App extends React.Component {
     });
   }
 
-  // this will hold the matches update state/clear with users keystrokes
+  // this will hold the matches update state/clear with users keystrokes, combining first and last names
   dataSearch(firstSearch, lastSearch) {
     // console.log(dataToSearch);
-    
     let firstFiltered = firstSearch.map(data => {
       return data;
     });
@@ -40,18 +41,16 @@ class App extends React.Component {
 
     console.log(personsFilter);
     
-      // if (this.state.search === '' ) {
-      //   this.setState({
-      //   displayData: []
-      // });
-      // } else {
-      //   this.setState({
-      //   displayData: dataFiltered
-      // });
-      // }
+    if (this.state.search === '' ) {
+      this.setState({
+      displayData: []
+    });
+    } else {
+      this.setState({
+      displayData: personsFilter
+    });
+    }
   }
-
-
 
   // get the value of the user keystroke, hold in state
   // use the keystrokes to filter through the data state
@@ -71,29 +70,24 @@ class App extends React.Component {
           .toLowerCase()
           .indexOf(this.state.search) !== -1;
       });
-      
       this.dataSearch(lastNameSearch, firstNameSearch);
     });
   }
 
   render() {
-
-    return (
-      <div>
+    let matches = this.state.displayData;
+    return <div>
         <h1>Search It!</h1>
         <label>Search a name!</label>
-        <input
-          type="text"
-          value={this.state.search}
-          onChange={this.updateSearch}
-        />
+        <input type="text" value={this.state.search} onChange={this.updateSearch} />
         <div>
           <ul>
-            {/* <li>{this.state.displayData}</li> */}
+            {matches.map((people, i) => <li key={i}>
+                <button onClick={this.post}>{people.firstname} {people.lastname}</button>
+              </li>)}
           </ul>
         </div>
-      </div>
-    );
+      </div>;
   }
 }
 
