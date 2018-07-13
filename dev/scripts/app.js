@@ -75,8 +75,6 @@ class App extends React.Component {
       },
       () => {
         let lastNameSearch = this.state.data.filter(user => {
-          console.log(user);
-
           return (
             user.lastname.toLowerCase().indexOf(this.state.search) !== -1
           );
