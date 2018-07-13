@@ -16,7 +16,6 @@ class App extends React.Component {
     this.dataSearch = this.dataSearch.bind(this);
     this.dataSearch = this.dataSearch.bind(this);
     this.post = this.post.bind(this);
-    this.highlight = this.highlight.bind(this);
   }
 
   componentDidMount() {
@@ -35,7 +34,6 @@ class App extends React.Component {
     const name = e.target;
     buttonArray.push(name);
     const filtering = buttonArray[0].textContent;
-    // console.log(filtering);
     this.setState({
       postData: filtering
     });
@@ -58,14 +56,9 @@ class App extends React.Component {
         displayData: []
       });
     } else {
-      this.setState(
-        {
+      this.setState({
           displayData: personsFilter
-        },
-        () => {
-          this.highlight(personsFilter);
-        }
-      );
+        });
     }
   }
 
@@ -87,45 +80,11 @@ class App extends React.Component {
         });
 
         this.dataSearch(lastNameSearch, firstNameSearch);
-        // this.highlight(this.state.search);
       }
     );
   }
 
-  highlight(input, filtered) {
-
-    // console.log(filtered);
-    // console.log(input);
-    // if (filtered || input != undefined) {
-    //   console.log("hi");
-
-    //   return filtered.filter(data => {
-    //     console.log(data);
-
-    //     const regex = new RegExp(input, "gi");
-    //     return data.firstname.match(regex);
-    //   });
-    // }
-  }
-
   render() {
-    // console.log(this.state.displayData);
-    // console.log(this.state.search);
-
-    const dataShow = this.state.displayData;
-    const dataSearched = this.state.search;
-    //   return filtered.filter(data => {
-    //     console.log(data);
-
-    //     return data.firstname.match(regex);
-    //   });
-    // }
-    const regex = new RegExp(dataSearched, "gi");
-
-    const replace = dataSearched.replace(
-      regex,
-      `<span>${dataSearched}</span>`
-    );
 
     let matches = this.state.displayData;
     return (
@@ -156,13 +115,9 @@ class App extends React.Component {
           <ul>
             {matches.map((people, i) => (
               <li key={i} onClick={this.post}>
-                {dataShow.filter((data) => {
-                  console.log(data);
-                  
                   <button>
                     {people.firstname} {people.lastname}
-                  </button>;
-                })}
+                  </button>
               </li>
             ))}
           </ul>
