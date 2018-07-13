@@ -8,7 +8,7 @@ const createUser = () => {
 };
 
 // Try changing this to test your input!
-const USER_COUNT = 100;
+const USER_COUNT = 10;
 
 const users = Array(USER_COUNT)
   .fill("")

@@ -1,5 +1,5 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 import faker from "faker";
 import filterUsers from "../server/index";
 
@@ -9,74 +9,74 @@ class App extends React.Component {
     this.state = {
       search: "",
       data: [],
-      display: []
+      displayData: [],
+      clickData: []
     };
     this.updateSearch = this.updateSearch.bind(this);
-    this.dataMatches = this.dataMatches.bind(this);
     this.dataSearch = this.dataSearch.bind(this);
   }
 
   componentDidMount() {
-    // console.log(filterUsers());
     const allData = filterUsers();
     this.setState({
       data: allData
     });
-    let dataToSearch = this.state.data.filter(user => {
-      return user.firstname.toLowerCase().indexOf(this.state.search) !== -1;
-    });
   }
 
-  // filtering() {
-  //   console.log(dataToSearch);
+  // this will hold the matches update state/clear with users keystrokes
+  dataSearch(firstSearch, lastSearch) {
+    // console.log(dataToSearch);
     
-  //   let dataToSearch = this.state.data.filter(user => {
-  //     return user.firstname.toLowerCase().indexOf(this.state.search) !== -1;
-  //   });
-  //   this.dataMatches(dataToSearch);
-  // }
-
-  dataMatches(userData) {
-    console.log(userData);
-    let dataToSearch = this.state.data.filter(user => {
-      return user.firstname.toLowerCase().indexOf(this.state.search) !== -1;
+    let firstFiltered = firstSearch.map(data => {
+      return data;
     });
+     let lastFiltered = lastSearch.map(data => {
+       return data;
+     });
+    console.log(firstFiltered);
+    console.log(lastFiltered);
 
+    let personsFilter = lastFiltered.concat(firstFiltered);
+
+    console.log(personsFilter);
+    
+      // if (this.state.search === '' ) {
+      //   this.setState({
+      //   displayData: []
+      // });
+      // } else {
+      //   this.setState({
+      //   displayData: dataFiltered
+      // });
+      // }
   }
-  // filter as they type
-  // render the matches - hold them in sttate
-  // on click render on the page, stave to state
 
-  dataSearch(dataToSearch) {
-    const dataFiltered = dataToSearch.map((data) => {
-      return (data.firstname, data.lastname)
-      // const firstName = data.firstname;
-      // const lastName =  data.lastname;
-      console.log(data.firstname);                      
-    })
 
-    this.dataMatches(dataFiltered);
-    }
 
   // get the value of the user keystroke, hold in state
+  // use the keystrokes to filter through the data state
   updateSearch(e) {
     const userInput = e.target.value.substr(0, 30);
 
-    let dataToSearch = this.state.data.filter(user => {
-      return user.firstname.toLowerCase().indexOf(this.state.search) !== -1;
-    });    
     this.setState({
       search: userInput
+    }, () => {
+      let lastNameSearch = this.state.data.filter(user => {
+        return user.lastname
+          .toLowerCase()
+          .indexOf(this.state.search) !== -1;
+      });
+      let firstNameSearch = this.state.data.filter(user => {
+        return user.firstname
+          .toLowerCase()
+          .indexOf(this.state.search) !== -1;
+      });
+      
+      this.dataSearch(lastNameSearch, firstNameSearch);
     });
-    this.dataSearch(dataToSearch);
   }
 
   render() {
-    // let filteredData = this.state.data.filter(
-    //   (user) => {
-    //     return user.firstname.toLowerCase().indexOf(this.state.search) !== -1;
-    //   }
-    // );
 
     return (
       <div>
@@ -87,19 +87,14 @@ class App extends React.Component {
           value={this.state.search}
           onChange={this.updateSearch}
         />
-        <ul />
-        {/* i did the filtering here instead? */}
-        {/* <ul>
-          {filteredData.map((data, i) => {
-            console.log(data);                        
-            return <li key={i}>
-                {data.firstname} {data.lastname}
-              </li>;
-          })}
-        </ul> */}
+        <div>
+          <ul>
+            {/* <li>{this.state.displayData}</li> */}
+          </ul>
+        </div>
       </div>
     );
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(<App />, document.getElementById("app"));
