@@ -1,0 +1,64 @@
+@mixin fontSize($scale) {
+	font-size: $scale * 1px;
+	font-size: ($scale / 10) * 1rem;
+}
+
+$primary: #28968B;
+$secondary: #958372;
+$main: #333333;
+$background: #f5f5f5;
+
+html {
+  font-size: 62.5%;
+  margin: auto;
+  max-width: 80%;
+  background-color: $background;
+  color: $main;
+}
+
+h1 {
+  @include fontSize(35);
+  text-align: center;
+  padding: 10px;
+}
+.search {
+  text-align: center;
+  @include fontSize(18);
+}
+
+input:active,
+input:hover,
+input:visited,
+input:focus {
+  border: 5px solid $primary;
+  background: white;
+}
+
+input {
+  border: 5px solid $secondary;
+  background: transparent;
+  margin: 10px 15px;
+  padding: 5px;
+}
+.results {
+  @include fontSize(16);
+  & ul {
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 100%;
+    justify-content: center;
+    & li {
+      padding: 5px;
+      & button {
+        padding: 10px;
+        border: 1px solid $primary;
+        &:hover {
+          border: 1px solid $secondary;
+          background-color: $secondary;
+        }
+      }
+    }
+  }
+}
+

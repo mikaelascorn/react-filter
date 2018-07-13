@@ -10,12 +10,12 @@ class App extends React.Component {
       search: "",
       data: [],
       displayData: [],
-      clickData: []
+      postData: []
     };
     this.updateSearch = this.updateSearch.bind(this);
     this.dataSearch = this.dataSearch.bind(this);
     this.dataSearch = this.dataSearch.bind(this);
-
+    this.post = this.post.bind(this);
   }
 
   componentDidMount() {
@@ -24,6 +24,29 @@ class App extends React.Component {
       data: allData
     });
   }
+
+  //this will register if the user selected the name and display 
+  post(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    // console.log();
+    console.log(e.target);
+
+    console.log(e.target.txt);
+
+    const holdingArray = []
+    const name = e.target;
+    for (let key in name) {
+      holdingArray.push(name)
+    }
+    console.log(holdingArray);
+    let index = Object.keys(holdingArray).indexOf(name);
+    console.log(index);
+    
+
+  }
+
+
 
   // this will hold the matches update state/clear with users keystrokes, combining first and last names
   dataSearch(firstSearch, lastSearch) {
@@ -34,12 +57,9 @@ class App extends React.Component {
      let lastFiltered = lastSearch.map(data => {
        return data;
      });
-    console.log(firstFiltered);
-    console.log(lastFiltered);
 
     let personsFilter = lastFiltered.concat(firstFiltered);
-
-    console.log(personsFilter);
+    // console.log(personsFilter);
     
     if (this.state.search === '' ) {
       this.setState({
@@ -74,16 +94,27 @@ class App extends React.Component {
     });
   }
 
+
+  //  <ul>
+  //           {matches.map((people, i) => <li key={i}>
+  //             <button onClick={this.post}>{people.firstname} {people.lastname}</button>
+  //           </li>)}
+  //         </ul>
+
   render() {
     let matches = this.state.displayData;
-    return <div>
+    return <div className="renderWrapper">
         <h1>Search It!</h1>
-        <label>Search a name!</label>
-        <input type="text" value={this.state.search} onChange={this.updateSearch} />
-        <div>
+        <div className="search">
+          <label>Search a name!</label>
+          <input type="text" placeholder="Type a name" value={this.state.search} onChange={this.updateSearch} />
+        </div>
+        <div className="results">
           <ul>
-            {matches.map((people, i) => <li key={i}>
-                <button onClick={this.post}>{people.firstname} {people.lastname}</button>
+            {matches.map((people, i) => <li key={i} onClick={this.post}>
+                <button>
+                  {people.firstname} {people.lastname}
+                </button>
               </li>)}
           </ul>
         </div>
