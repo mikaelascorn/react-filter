@@ -10,7 +10,8 @@ class App extends React.Component {
       search: "",
       data: [],
       displayData: [],
-      postData: ""
+      postData: "",
+      displaySearch: "",
     };
     this.updateSearch = this.updateSearch.bind(this);
     this.dataSearch = this.dataSearch.bind(this);
@@ -65,18 +66,25 @@ class App extends React.Component {
   // get the value of the user keystroke, hold in state
   // use the keystrokes to filter through the data state
   updateSearch(e) {
-    const userInput = e.target.value.substr(0, 30);
-
+    const userInput = e.target.value.toLowerCase().substr(0, 30);
+    const userView = e.target.value.substr(0, 30);
     this.setState(
       {
-        search: userInput
+        search: userInput,
+        displaySearch: userView
       },
       () => {
         let lastNameSearch = this.state.data.filter(user => {
-          return user.lastname.toLowerCase().indexOf(this.state.search) !== -1;
+          console.log(user);
+
+          return (
+            user.lastname.toLowerCase().indexOf(this.state.search) !== -1
+          );
         });
         let firstNameSearch = this.state.data.filter(user => {
-          return user.firstname.toLowerCase().indexOf(this.state.search) !== -1;
+          return (
+            user.firstname.toLowerCase().indexOf(this.state.search) !== -1
+          );
         });
 
         this.dataSearch(lastNameSearch, firstNameSearch);
@@ -98,7 +106,7 @@ class App extends React.Component {
               id="input"
               type="text"
               placeholder="Start searching"
-              value={this.state.search}
+              value={this.state.displaySearch}
               onChange={this.updateSearch}
             />
           ) : (
