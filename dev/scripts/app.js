@@ -20,6 +20,8 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    // console.log(filterUsers());
+    
     const allData = filterUsers();
     this.setState({
       data: allData
@@ -50,8 +52,20 @@ class App extends React.Component {
       return data;
     });
 
-    let personsFilter = lastFiltered.concat(firstFiltered);
-
+    let personsFilter = lastFiltered.concat(firstFiltered).sort((a, b) => {            
+            if (a.lastname < b.lastname) {
+              // console.log(a.lastname, b.lastname);
+              return -1;
+            }
+            if (a.lastname > b.lastname) 
+            {
+              // console.log(a.lastname, b.lastname);
+              return 1;
+            }
+            // console.log(a.lastname, b.lastname);
+            return 0;
+          });
+    
     if (this.state.search === "") {
       this.setState({
         displayData: []
@@ -68,68 +82,62 @@ class App extends React.Component {
   updateSearch(e) {
     const userInput = e.target.value.toLowerCase().substr(0, 30);
     const userView = e.target.value.substr(0, 30);
-    this.setState(
-      {
-        search: userInput,
-        displaySearch: userView
-      },
-      () => {
-        let lastNameSearch = this.state.data.filter(user => {
-          return (
-            user.lastname.toLowerCase().indexOf(this.state.search) !== -1
-          );
+    // this.setState({
+        // search: userInput,
+        // displaySearch: userView
+      // },
+      // () => {
+        let lastNameSearch = this.state.data
+          .filter(user => {
+            return user.lastname
+                .toLowerCase()
+                .indexOf(userInput) !== -1;
+          })
+          // .sort((a, b) => (a < b ? -1 : 1));
+          // .sort((a, b) => {        
+          //   console.log(a.lastname, b.lastname);
+                
+          //   if (a.lastname < b.lastname) return -1;
+          //   if (a.lastname > b.lastname) return 1;
+          //   return 0;
+          
+        let firstNameSearch = this.state.data
+          .filter(user => {
+            return user.firstname
+                .toLowerCase()
+                .indexOf(userInput) !== -1;
         });
-        let firstNameSearch = this.state.data.filter(user => {
-          return (
-            user.firstname.toLowerCase().indexOf(this.state.search) !== -1
-          );
-        });
-
         this.dataSearch(lastNameSearch, firstNameSearch);
-      }
-    );
+      // });
+    this.setState({
+      search: userInput,
+      displaySearch: userView
+
+    })
   }
 
   render() {
+    // const regex = new RegExp(this.state.displayData, "gi");
 
     let matches = this.state.displayData;
-    return (
-      <div className="renderWrapper">
+    return <div className="renderWrapper">
         <h1>Search It!</h1>
         <div className="search">
           <label>Search a name!</label>
-          {this.state.postData === "" ? (
-            <input
-              ref="searchInput"
-              id="input"
-              type="text"
-              placeholder="Start searching"
-              value={this.state.displaySearch}
-              onChange={this.updateSearch}
-            />
-          ) : (
-            <input
-              id="input"
-              type="text"
-              placeholder="Start searching"
-              value={this.state.postData}
-              onChange={this.updateSearch}
-            />
-          )}
+          {this.state.postData === "" ? <input ref="searchInput" id="input" type="text" placeholder="Start searching" value={this.state.displaySearch} onChange={this.updateSearch} /> : <input id="input" type="text" placeholder="Start searching" value={this.state.postData} onChange={this.updateSearch} />}
         </div>
         <div className="results">
           <ul>
-            {matches.map((people, i) => (
-              <li key={i} onClick={this.post}>
+            {matches
+              // .sort((a, b) => a.lastname + b.lastname)
+              .map((people, i) => <li key={i} onClick={this.post}>
                   <button>
                     {people.firstname} {people.lastname}
                   </button>
-              </li>
-            ))}
+                </li>)}
           </ul>
         </div>
-      </div>
-    );
+      </div>;
   }
 }
 
