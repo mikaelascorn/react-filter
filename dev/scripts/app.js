@@ -56,9 +56,7 @@ class App extends React.Component {
             if (a.lastname < b.lastname) {
               // console.log(a.lastname, b.lastname);
               return -1;
-            }
-            if (a.lastname > b.lastname) 
-            {
+            } if (a.lastname > b.lastname) {
               // console.log(a.lastname, b.lastname);
               return 1;
             }
@@ -82,33 +80,19 @@ class App extends React.Component {
   updateSearch(e) {
     const userInput = e.target.value.toLowerCase().substr(0, 30);
     const userView = e.target.value.substr(0, 30);
-    // this.setState({
-        // search: userInput,
-        // displaySearch: userView
-      // },
-      // () => {
-        let lastNameSearch = this.state.data
-          .filter(user => {
-            return user.lastname
-                .toLowerCase()
-                .indexOf(userInput) !== -1;
-          })
-          // .sort((a, b) => (a < b ? -1 : 1));
-          // .sort((a, b) => {        
-          //   console.log(a.lastname, b.lastname);
-                
-          //   if (a.lastname < b.lastname) return -1;
-          //   if (a.lastname > b.lastname) return 1;
-          //   return 0;
-          
-        let firstNameSearch = this.state.data
-          .filter(user => {
-            return user.firstname
-                .toLowerCase()
-                .indexOf(userInput) !== -1;
-        });
-        this.dataSearch(lastNameSearch, firstNameSearch);
-      // });
+    let lastNameSearch = this.state.data
+      .filter(user => {
+        return user.lastname
+            .toLowerCase()
+            .indexOf(userInput) !== -1;
+      })
+    let firstNameSearch = this.state.data
+      .filter(user => {
+        return user.firstname
+            .toLowerCase()
+            .indexOf(userInput) !== -1;
+    });
+    this.dataSearch(lastNameSearch, firstNameSearch);
     this.setState({
       search: userInput,
       displaySearch: userView
